@@ -58,7 +58,7 @@ template < class T >
 T* Hybrid<T>::dequeue()
 {
 	T* item = q->dequeue();
-	remove(item->getKey()); 
+	sldl->remove(item->getKey()); 
 	return item;
 }
 template < class T >
