@@ -10,9 +10,10 @@ class Hybrid
 {
 
    private:
-      QueueLinked<T>* q;
+      //QueueLinked<T>* q;
       SortedListDoublyLinked<T>* sldl;
-
+      QueueLinked< DoubleNode<T> >* q;
+      //SortedListDoublyLinked< DoubleNode<T> >* sldl;
    public:
       Hybrid(int (*comp_items) (T* item_1, T* item_2), int (*comp_keys) (String* key, T* item));
       ~Hybrid();
@@ -27,8 +28,8 @@ class Hybrid
 template < class T >
 Hybrid<T>::Hybrid(int (*comp_items) (T* item_1, T* item_2), int (*comp_keys) (String* key, T* item))
 {
-   q = new QueueLinked<T>();
-   sldl = new SortedListDoublyLinked<T>(comp_items, comp_keys);
+   q = new QueueLinked< DoubleNode<T> >();
+   sldl = new SortedListDoublyLinked< T >(comp_items, comp_keys);
 }
 
 template < class T >
@@ -48,17 +49,31 @@ bool Hybrid<T>::isEmpty()
 {
 	return q->isEmpty();
 }
-template < class T >
+/*template < class T >
 void Hybrid<T>::enqueue(T* item)
 {
 	q->enqueue(item);
 	sldl->add(item);
+}*/
+template < class T >
+void Hybrid<T>::enqueue(T* item)
+{
+	q->enqueue(sldl->addDN(item));
+	
 }
+/*template < class T >
+T* Hybrid<T>::dequeue()
+{
+	
+	T* item = = q->dequeue();
+	sldl->remove(item->getKey());
+	return item;
+}*/
 template < class T >
 T* Hybrid<T>::dequeue()
 {
-	T* item = q->dequeue();
-	sldl->remove(item->getKey()); 
+	DoubleNode<T>* node = q->dequeue();
+	T* item = sldl->remove(node);
 	return item;
 }
 template < class T >

@@ -18,8 +18,8 @@ class SortedListDoublyLinked
       DoubleNode<T>* locateNodeRemove(String* sk);
       DoubleNode<T>* locateNodeAdd(T* item);
 
-      DoubleNode<T>* addDN(T* item);
-      T* remove(DoubleNode<T>* curr);
+      //DoubleNode<T>* addDN(T* item);
+      //T* remove(DoubleNode<T>* curr);
 
       DoubleNode<T>* findHead();
       DoubleNode<T>* findTail();
@@ -30,6 +30,9 @@ class SortedListDoublyLinked
    public:
       SortedListDoublyLinked(int (*comp_items) (T* item_1, T* item_2), int (*comp_keys) (String* key, T* item));
       ~SortedListDoublyLinked();
+
+	  DoubleNode<T>* addDN(T* item);
+	  T* remove(DoubleNode<T>* curr);
 
       bool isEmpty();
       int size();
@@ -75,31 +78,24 @@ T* SortedListDoublyLinked<T>::remove(DoubleNode<T>* curr)
    //DO THIS (prev == NULL / after == NULL are special cases)
    //remember to set loc
 
-	if (!curr) return 0;
+	if (curr==0) return 0;
    T* item= curr->getItem();
 
    DoubleNode<T>* prev  = curr->getPrev();
    DoubleNode<T>* after = curr->getNext();
 
-   if (prev == NULL)
+   if (after)
    {
-	   if (after)
-	   {
-		   after->setPrev(NULL);
-		   loc = after;
-	   }
+	after->setPrev(prev);
    }
-   else if (after == NULL)
-   {
-	   prev->setNext(NULL);
-	   loc = prev;  //are we following what we remove?????
-   }
-
-   else
+   if (prev)
    {
 	   prev->setNext(after);
-	   after->setPrev(prev);
-	   loc = prev;
+	   loc = prev;  //are we following what we remove?????
+   }
+   else
+   {
+	   loc = after;
    }
    sze--;
    delete curr;
