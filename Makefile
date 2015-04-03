@@ -18,6 +18,6 @@ all: Project
 Project: 		$(FILES)
 			$(LINK) $(EXECUTABLE) $(FILES) $(LIBS)
 
-HybridDriver.o:	HybridDriver.cpp	Hybrid.h	SortedListDoublyLinked.h
-				$(COMPILE)	HybridDriver.cpp
+HybridDriver.o:	HybridDriver.cpp	Hybrid.h
+			$(COMPILE)	HybridDriver.cpp
 
